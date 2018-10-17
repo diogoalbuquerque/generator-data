@@ -1,0 +1,105 @@
+buildscript {
+    ext.kotlin_version = '1.2.51'
+    ext.spring_boot_version = '2.0.4.RELEASE'
+    ext.hikaricp_version = '3.2.0'
+    ext.h2_version = '1.4.197'
+
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version") // Required for Kotlin integration
+        // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version")
+        //Linter
+        classpath("gradle.plugin.org.jmailen.gradle:kotlinter-gradle:1.7.0")
+        //H2
+        classpath("com.h2database:h2:$h2_version")
+    }
+}
+
+plugins {
+    id 'org.jmailen.kotlinter' version "1.12.0"
+}
+
+group 'greener.geb'
+version '1.0'
+
+apply plugin: 'kotlin-platform-jvm'
+apply plugin: 'org.springframework.boot'
+apply plugin: "org.jmailen.kotlinter" //Lint + format
+apply plugin: 'jacoco'
+
+jar {
+    baseName = "${rootProject.name}"
+    version = '1.0'
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+//Linter configuration
+kotlinter {
+    ignoreFailures = false
+    indentSize = 4
+    continuationIndentSize = 8
+    reporters = ['checkstyle', 'plain']
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    //Reflect
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    //Spring boot
+    compile("org.springframework.boot:spring-boot-starter-web:$spring_boot_version") {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+    compile "org.springframework.boot:spring-boot-starter-undertow:$spring_boot_version"
+    //JDBC
+    compile("org.springframework.boot:spring-boot-starter-jdbc:$spring_boot_version")
+    compile("com.zaxxer:HikariCP:$hikaricp_version")
+    //Logging
+    compile 'org.slf4j:slf4j-api'
+    compile 'ch.qos.logback:logback-classic'
+    compile 'io.github.microutils:kotlin-logging:1.5.9' //wrapper de SlF4J em kotlin
+    //Spring test
+    testCompile "org.springframework.boot:spring-boot-starter-test:$spring_boot_version"
+    testCompile "junit:junit:4.12"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+    //mock
+    testCompile "io.mockk:mockk:1.8.6"
+    //assert
+    testCompile 'org.assertj:assertj-core:3.11.1'
+    // H2
+    compile "com.h2database:h2:$h2_version"
+    compile "com.github.kittinunf.fuel:fuel:1.5.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.24.0"
+
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}
+
+check.dependsOn jacocoTestReport
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+sourceCompatibility = "1.8"
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}

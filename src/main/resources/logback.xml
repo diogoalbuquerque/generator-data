@@ -1,0 +1,28 @@
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%d - %msg%n</Pattern>
+        </encoder>
+    </appender>
+    <appender name="SIFT" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>context</key>
+            <defaultValue>generator</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+                <file>${context}.log</file>
+                <prudent>true</prudent>
+                <encoder>
+                    <charset>UTF-8</charset>
+                    <pattern>%d [%thread] %level %mdc %logger{50} - %msg%n</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="SIFT"/>
+    </root>
+</configuration>

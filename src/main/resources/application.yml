@@ -1,0 +1,49 @@
+logging:
+  level:
+    io: error
+    org.xnio: error
+    org.springframework.web: error
+    org.springframework.context.support: error
+    org.springframework.boot.web.servlet: error
+    org.springframework.http.converter.json: error
+    org.springframework.jmx.export.annotation: error
+    org.springframework.boot.actuate.endpoint.mvc: error
+    greener.greb: info
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -> %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} -> %msg%n"
+spring:
+  output:
+    ansi:
+      enabled: always
+geb:
+  generator:
+    path:
+      input:
+    messages:
+      error:
+        environment: "Environment variable can not be null, please check it."
+        idiom: "Idiom variable can not be found, please check it: {0}."
+        filepath: "File path is incorrect, please check it: {0}."
+        external: "External input file can not be found, please check it: {0}."
+        server: "An error occurred while executing this process."
+      success:
+        cleaning-database: "Cleaning matrix data occurred successfully in the database: {0}."
+        cleaning: "Cleaning matrix data occurred successfully."
+        generate: "Generated matrix data successfully."
+        generate-database: "Generated matrix data occurred successfully in the database: {0}."
+        loading: "Loading {0} with success."
+        count-rows: "The number of rows in the database: {0} is {1}."
+      info:
+        cleaning-database: "Starting matrix data cleaning in the database: {0}."
+        generate-database: "Starting the recording of the matrix data in the database: {0}."
+        create: "Creating the matrix database."
+        loading: "Loading {0}."
+    datasource:
+        url: "jdbc:h2:mem:~/generatorDBDev;IGNORECASE=TRUE;"
+        username: SA
+        password:
+        driver-class-name: "org.h2.Driver"
+        maximum-pool-size: "40"
+        idle-timeout: "60000"
+        connection-timeout: "60000"
