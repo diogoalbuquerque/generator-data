@@ -73,7 +73,7 @@ dependencies {
     //mock
     testCompile "io.mockk:mockk:1.8.6"
     //assert
-    testCompile 'org.assertj:assertj-core:3.11.1'
+    testCompile 'org.assertj:assertj-core:3.17.0'
     // H2
     compile "com.h2database:h2:$h2_version"
     compile "com.github.kittinunf.fuel:fuel:1.5.0"
