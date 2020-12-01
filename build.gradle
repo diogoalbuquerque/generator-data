@@ -71,7 +71,7 @@ dependencies {
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     //mock
-    testCompile "io.mockk:mockk:1.8.6"
+    testCompile "io.mockk:mockk:1.10.3"
     //assert
     testCompile 'org.assertj:assertj-core:3.11.1'
     // H2
