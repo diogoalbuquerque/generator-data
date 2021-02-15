@@ -67,7 +67,7 @@ dependencies {
     compile 'io.github.microutils:kotlin-logging:1.5.9' //wrapper de SlF4J em kotlin
     //Spring test
     testCompile "org.springframework.boot:spring-boot-starter-test:$spring_boot_version"
-    testCompile "junit:junit:4.12"
+    testCompile "junit:junit:4.13.2"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     //mock
